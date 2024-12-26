@@ -11,4 +11,10 @@ SSE_URL: t.Final[str] = os.getenv("SSE_URL", "")
 if not SSE_URL:
     raise ValueError("SSE_URL environment variable is not set")
 
-asyncio.run(run_sse_client(SSE_URL))
+
+def main():
+    asyncio.run(run_sse_client(SSE_URL))
+
+
+if __name__ == "__main__":
+    main()

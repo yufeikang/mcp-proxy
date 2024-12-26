@@ -8,3 +8,6 @@ dependencies = ["mcp"]
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mcp-proxy = "mcp_proxy.__main__:main"
