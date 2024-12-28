@@ -56,11 +56,19 @@ Configure Claude Desktop to recognize the MCP server.
         "mcp-proxy": {
             "command": "mcp-proxy",
             "env": {
-                "SSE_URL": "http://example.io/sss"
+              "SSE_URL": "http://example.io/sse"
             }
-          }
         }
       }
     }
 
     ```
+
+## Advanced Configuration
+
+### Environment Variables
+
+| Name | Description |
+| ---- | ----------- |
+| SSE_URL | The MCP server SSE endpoint to connect to e.g. http://example.io/sse |
+| API_ACCESS_TOKEN | Added in the `Authorization` header of the HTTP request as a `Bearer` access token |

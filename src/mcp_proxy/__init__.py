@@ -109,10 +109,14 @@ async def create_proxy_server(remote_app: ClientSession):
     return app
 
 
-async def run_sse_client(url: str):
+async def run_sse_client(url: str, api_access_token: str | None = None):
     from mcp.client.sse import sse_client
 
-    async with sse_client(url=url) as (read_stream, write_stream):
+    headers = {}
+    if api_access_token is not None:
+        headers["Authorization"] = f"Bearer {api_access_token}"
+
+    async with sse_client(url=url, headers=headers) as (read_stream, write_stream):
         async with ClientSession(read_stream, write_stream) as session:
             app = await create_proxy_server(session)
             async with server.stdio_server() as (read_stream, write_stream):
