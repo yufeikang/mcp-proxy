@@ -7,7 +7,7 @@ from mcp.client.session import ClientSession
 logger = logging.getLogger(__name__)
 
 
-async def confugure_app(name: str, remote_app: ClientSession):
+async def create_server(name: str, remote_app: ClientSession):
     app = server.Server(name)
 
     async def _list_prompts(_: t.Any) -> types.ServerResult:
@@ -96,6 +96,11 @@ async def confugure_app(name: str, remote_app: ClientSession):
 
     app.request_handlers[types.CompleteRequest] = _complete
 
+    return app
+
+
+async def configure_app(name: str, remote_app: ClientSession):
+    app = await create_server(name, remote_app)
     async with server.stdio_server() as (read_stream, write_stream):
         await app.run(
             read_stream,
@@ -111,4 +116,4 @@ async def run_sse_client(url: str):
         async with ClientSession(read_stream, write_stream) as session:
             response = await session.initialize()
 
-            await confugure_app(response.serverInfo.name, session)
+            await configure_app(response.serverInfo.name, session)
