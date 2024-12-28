@@ -1,7 +1,7 @@
 [project]
 name = "mcp-proxy"
 authors = [{ name = "Sergey Parfenyuk", email = "sergey.parfenyuk@gmail.com" }]
-version = "0.1.0"
+version = "0.2.0"
 requires-python = ">=3.11"
 dependencies = ["mcp"]
 
@@ -12,16 +12,28 @@ build-backend = "setuptools.build_meta"
 [project.scripts]
 mcp-proxy = "mcp_proxy.__main__:main"
 
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
 [tool.uv]
-dev-dependencies = [
-    "pytest>=8.3.3",
-    "pytest-asyncio>=0.25.0",
+dev-dependencies = ["pytest>=8.3.3", "pytest-asyncio>=0.25.0"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "EM101",  # Exception must not use a string literal, assign to variable first
+    "TRY003", # Avoid specifying long messages outside the exception class
+    "ERA001", # Found commented-out code
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "INP001"]
+
+[tool.ruff]
+line-length = 100
 
 [tool.pytest.ini_options]
 pythonpath = "src"
-addopts = [
-    "--import-mode=importlib",
-]
+addopts = ["--import-mode=importlib"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"

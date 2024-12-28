@@ -5,6 +5,8 @@
   - [Installation](#installation)
   - [Configuration](#configuration)
     - [Claude Desktop Configuration](#claude-desktop-configuration)
+  - [Advanced Configuration](#advanced-configuration)
+    - [Environment Variables](#environment-variables)
 
 ## About
 
@@ -68,7 +70,7 @@ Configure Claude Desktop to recognize the MCP server.
 
 ### Environment Variables
 
-| Name | Description |
-| ---- | ----------- |
-| SSE_URL | The MCP server SSE endpoint to connect to e.g. http://example.io/sse |
+| Name             | Description                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| SSE_URL          | The MCP server SSE endpoint to connect to e.g. http://example.io/sse               |
 | API_ACCESS_TOKEN | Added in the `Authorization` header of the HTTP request as a `Bearer` access token |
