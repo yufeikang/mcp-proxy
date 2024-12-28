@@ -16,7 +16,31 @@ mcp-proxy = "mcp_proxy.__main__:main"
 "*" = ["py.typed"]
 
 [tool.uv]
-dev-dependencies = ["pytest>=8.3.3", "pytest-asyncio>=0.25.0"]
+dev-dependencies = [
+    "pytest>=8.3.3",
+    "pytest-asyncio>=0.25.0",
+    "coverage>=7.6.0",
+]
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = true
+precision = 2
+exclude_lines = [
+    'pragma: no cover',
+    'raise NotImplementedError',
+    'if TYPE_CHECKING:',
+    'if typing.TYPE_CHECKING:',
+    '@overload',
+    '@typing.overload',
+    '\(Protocol\):$',
+    'typing.assert_never',
+    '$\s*assert_never\(',
+    'if __name__ == .__main__.:',
+]
 
 [tool.ruff.lint]
 select = ["ALL"]
