@@ -11,7 +11,7 @@ import logging
 import os
 import typing as t
 
-from . import run_sse_client
+from .sse_client import run_sse_client
 
 logging.basicConfig(level=logging.DEBUG)
 SSE_URL: t.Final[str] = os.getenv("SSE_URL", "")
