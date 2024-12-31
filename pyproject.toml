@@ -26,10 +26,7 @@ classifiers = [
 ]
 version = "0.2.2"
 requires-python = ">=3.11"
-dependencies = [
-    "mcp",
-    "uvicorn>=0.34.0",
-]
+dependencies = ["mcp", "uvicorn>=0.34.0"]
 
 [build-system]
 requires = ["setuptools"]
@@ -43,6 +40,7 @@ Changelog = "https://github.com/sparfenyuk/mcp-proxy/releases"
 
 [project.scripts]
 mcp-proxy = "mcp_proxy.__main__:main"
+mcp-reverse-proxy = "mcp_proxy.__main__:client"
 
 [tool.setuptools.package-data]
 "*" = ["py.typed"]
@@ -52,6 +50,7 @@ dev-dependencies = [
     "pytest>=8.3.3",
     "pytest-asyncio>=0.25.0",
     "coverage>=7.6.0",
+    "mypy>=1.0.0",
 ]
 
 [tool.coverage.run]
@@ -73,6 +72,21 @@ exclude_lines = [
     '$\s*assert_never\(',
     'if __name__ == .__main__.:',
 ]
+
+[tool.mypy]
+allow_redefinition = false
+disallow_untyped_defs = true
+follow_imports = "normal"
+follow_untyped_imports = true
+no_implicit_optional = true
+show_error_code_links = true
+show_error_codes = true
+strict = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
 [tool.ruff.lint]
 select = ["ALL"]

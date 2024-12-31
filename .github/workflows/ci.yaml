@@ -34,6 +34,21 @@ jobs:
         env:
           SKIP: no-commit-to-branch
 
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --python 3.11 --frozen --all-extras --all-packages
+
+      - name: Run mypy
+        run: uv run --frozen mypy --python-version 3.11 src
+
   test:
     name: test on ${{ matrix.python-version }}
     runs-on: ubuntu-latest
