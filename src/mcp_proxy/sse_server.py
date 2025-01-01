@@ -19,12 +19,12 @@ from .proxy_server import create_proxy_server
 class SseServerSettings:
     """Settings for the server."""
 
-    bind_host: str = "127.0.0.1"
-    port: int = 8000
+    bind_host: str
+    port: int
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
 
 
-def create_starlette_app(mcp_server: Server, debug: bool | None = None) -> Starlette:
+def create_starlette_app(mcp_server: Server, *, debug: bool = False) -> Starlette:
     """Create a Starlette application that can server the provied mcp server with SSE."""
     sse = SseServerTransport("/messages/")
 
@@ -64,7 +64,7 @@ async def run_sse_server(
         mcp_server = await create_proxy_server(session)
 
         # Bind SSE request handling to MCP server
-        starlette_app = await create_starlette_app(mcp_server, sse_settings.log_level == "DEBUG")
+        starlette_app = create_starlette_app(mcp_server, debug=(sse_settings.log_level == "DEBUG"))
 
         # Configure HTTP server
         config = uvicorn.Config(
