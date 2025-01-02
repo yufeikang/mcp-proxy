@@ -1,5 +1,7 @@
 # mcp-proxy
 
+[![smithery badge](https://smithery.ai/badge/mcp-proxy)](https://smithery.ai/server/mcp-proxy)
+
 - [mcp-proxy](#mcp-proxy)
   - [About](#about)
   - [1. stdio to SSE](#1-stdio-to-sse)
@@ -123,6 +125,14 @@ mcp-proxy --sse-port=8080 -- uvx mcp-server-fetch --user-agent=YourUserAgent
 This will start an MCP server that can be connected to at `http://127.0.0.1:8080/sse`
 
 ## Installation
+
+### Installing via Smithery
+
+To install MCP Proxy for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp-proxy):
+
+```bash
+npx -y @smithery/cli install mcp-proxy --client claude
+```
 
 The stable version of the package is available on the PyPI repository. You can install it using the following command:
 
