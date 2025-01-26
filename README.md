@@ -175,7 +175,7 @@ uv tool install git+https://github.com/sparfenyuk/mcp-proxy
 Starting from version 0.3.2, it's possible to pull and run the corresponding container image:
 
 ```bash
-docker run -t ghcr.io/sparfenyuk/mcp-proxy:v0.3.2 --help
+docker run -t ghcr.io/sparfenyuk/mcp-proxy:v0.3.2-alpine --help
 ```
 
 ## Command line arguments
