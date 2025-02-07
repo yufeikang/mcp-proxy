@@ -35,6 +35,7 @@ jobs:
           tags: "${{ github.repository }}:${{ github.event.release.tag_name }}-alpine"
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Connect to MCP servers that run on SSE transport, or expose stdio servers as an SSE server using the MCP Proxy server.
 
   ghcr-io:
     name: Push multi-arch Docker image to ghcr.io
