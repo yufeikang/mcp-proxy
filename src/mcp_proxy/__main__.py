@@ -77,6 +77,12 @@ def main() -> None:
         help="Environment variables used when spawning the server. Can be used multiple times.",
         default=[],
     )
+    stdio_client_options.add_argument(
+        "--pass-environment",
+        action=argparse.BooleanOptionalAction,
+        help="Pass through all environment variables when spawning the server.",
+        default=False,
+    )
 
     sse_server_group = parser.add_argument_group("SSE server options")
     sse_server_group.add_argument(
@@ -112,10 +118,19 @@ def main() -> None:
 
     # Start a client connected to the given command, and expose as an SSE server
     logging.debug("Starting stdio client and SSE server")
+
+    # The environment variables passed to the server process
+    env: dict[str, str] = {}
+    # Pass through current environment variables if configured
+    if args.pass_environment:
+        env.update(os.environ)
+    # Pass in and override any environment variables with those passed on the command line
+    env.update(dict(args.env))
+
     stdio_params = StdioServerParameters(
         command=args.command_or_url,
         args=args.args,
-        env=dict(args.env),
+        env=env,
     )
     sse_settings = SseServerSettings(
         bind_host=args.sse_host,
