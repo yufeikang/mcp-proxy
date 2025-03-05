@@ -37,6 +37,7 @@ def main() -> None:
             "  mcp-proxy --headers Authorization 'Bearer YOUR_TOKEN' http://localhost:8080/sse\n"
             "  mcp-proxy --sse-port 8080 -- your-command --arg1 value1 --arg2 value2\n"
             "  mcp-proxy your-command --sse-port 8080 -e KEY VALUE -e ANOTHER_KEY ANOTHER_VALUE\n"
+            "  mcp-proxy your-command --sse-port 8080 --allow-origin='*'\n"
         ),
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -96,6 +97,12 @@ def main() -> None:
         default="127.0.0.1",
         help="Host to expose an SSE server on. Default is 127.0.0.1",
     )
+    sse_server_group.add_argument(
+        "--allow-origin",
+        nargs="+",
+        default=[],
+        help="Allowed origins for the SSE server. Can be used multiple times. Default is no CORS allowed.",  # noqa: E501
+    )
 
     args = parser.parse_args()
 
@@ -135,6 +142,7 @@ def main() -> None:
     sse_settings = SseServerSettings(
         bind_host=args.sse_host,
         port=args.sse_port,
+        allow_origins=args.allow_origin if len(args.allow_origin) > 0 else None,
     )
     asyncio.run(run_sse_server(stdio_params, sse_settings))
 

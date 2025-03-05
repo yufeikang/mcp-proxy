@@ -27,8 +27,8 @@ class BackgroundServer(uvicorn.Server):
                 await asyncio.sleep(1e-3)
             yield
         finally:
-            task.cancel()
-            self.shutdown()
+            self.should_exit = self.force_exit = True
+            await task
 
     @property
     def url(self) -> str:
@@ -47,7 +47,7 @@ async def test_create_starlette_app() -> None:
     async def list_prompts() -> list[types.Prompt]:
         return [types.Prompt(name="prompt1")]
 
-    app = create_starlette_app(server)
+    app = create_starlette_app(server, allow_origins=["*"])
 
     config = uvicorn.Config(app, port=0, log_level="info")
     server = BackgroundServer(config)

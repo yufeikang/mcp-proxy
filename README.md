@@ -51,10 +51,10 @@ This mode requires passing the URL to the MCP Server SSE endpoint as the first a
 
 Arguments
 
-| Name                 | Required | Description                                                           | Example                                       |
-| -------------------- | -------- | --------------------------------------------------------------------- | ----------------------------------------------|
-| `command_or_url`     | Yes      | The MCP server SSE endpoint to connect to                             | http://example.io/sse                         |
-| `--headers`          | No       | Headers to use for the MCP server SSE connection                      | Authorization 'Bearer my-secret-access-token' |
+| Name             | Required | Description                                      | Example                                       |
+| ---------------- | -------- | ------------------------------------------------ | --------------------------------------------- |
+| `command_or_url` | Yes      | The MCP server SSE endpoint to connect to        | http://example.io/sse                         |
+| `--headers`      | No       | Headers to use for the MCP server SSE connection | Authorization 'Bearer my-secret-access-token' |
 
 Environment Variables
 
@@ -104,13 +104,14 @@ This mode requires the `--sse-port` argument to be set. The `--sse-host` argumen
 
 Arguments
 
-| Name                 | Required                   | Description                                                      | Example              |
-| -------------------- | -------------------------- | ---------------------------------------------------------------- | -------------------- |
-| `command_or_url`     | Yes                        | The command to spawn the MCP stdio server                        | uvx mcp-server-fetch |
-| `--sse-port`         | No, random available       | The SSE server port to listen on                                 | 8080                 |
-| `--sse-host`         | No, `127.0.0.1` by default | The host IP address that the SSE server will listen on           | 0.0.0.0              |
-| `--env`              | No                         | Additional environment variables to pass to the MCP stdio server | FOO=BAR              |
-| `--pass-environment` | No                         | Pass through all  environment variables when spawning the server | --no-pass-environment |
+| Name                 | Required                   | Description                                                      | Example               |
+| -------------------- | -------------------------- | ---------------------------------------------------------------- | --------------------- |
+| `command_or_url`     | Yes                        | The command to spawn the MCP stdio server                        | uvx mcp-server-fetch  |
+| `--sse-port`         | No, random available       | The SSE server port to listen on                                 | 8080                  |
+| `--sse-host`         | No, `127.0.0.1` by default | The host IP address that the SSE server will listen on           | 0.0.0.0               |
+| `--env`              | No                         | Additional environment variables to pass to the MCP stdio server | FOO=BAR               |
+| `--pass-environment` | No                         | Pass through all environment variables when spawning the server  | --no-pass-environment |
+| `--allow-origin`     | No                         | Pass through all environment variables when spawning the server  | --allow-cors "\*"     |
 
 ### 2.2 Example usage
 
@@ -182,7 +183,9 @@ docker run -t ghcr.io/sparfenyuk/mcp-proxy:v0.3.2-alpine --help
 ## Command line arguments
 
 ```bash
-usage: mcp-proxy [-h] [-H KEY VALUE] [-e KEY VALUE] [--sse-port SSE_PORT] [--sse-host SSE_HOST] [--pass-environment] [command_or_url] [args ...]
+usage: mcp-proxy [-h] [-H KEY VALUE] [-e KEY VALUE] [--pass-environment | --no-pass-environment] [--sse-port SSE_PORT] [--sse-host SSE_HOST]
+                 [--allow-origin ALLOW_ORIGIN [ALLOW_ORIGIN ...]]
+                 [command_or_url] [args ...]
 
 Start the MCP proxy in one of two possible modes: as an SSE or stdio client.
 
@@ -206,12 +209,15 @@ stdio client options:
 SSE server options:
   --sse-port SSE_PORT   Port to expose an SSE server on. Default is a random port
   --sse-host SSE_HOST   Host to expose an SSE server on. Default is 127.0.0.1
+  --allow-origin ALLOW_ORIGIN [ALLOW_ORIGIN ...]
+                        Allowed origins for the SSE server. Can be used multiple times. Default is no CORS allowed.
 
 Examples:
   mcp-proxy http://localhost:8080/sse
   mcp-proxy --headers Authorization 'Bearer YOUR_TOKEN' http://localhost:8080/sse
   mcp-proxy --sse-port 8080 -- your-command --arg1 value1 --arg2 value2
   mcp-proxy your-command --sse-port 8080 -e KEY VALUE -e ANOTHER_KEY ANOTHER_VALUE
+  mcp-proxy your-command --sse-port 8080 --allow-origin='*'
 ```
 
 ## Testing
