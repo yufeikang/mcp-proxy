@@ -189,7 +189,7 @@ You can extend the `mcp-proxy` container image to include additional executables
 ```Dockerfile
 # file: mcp-proxy.Dockerfile
 
-FROM ghcr.io/sparfenyuk/mcp-proxy:commit-7eb4a09
+FROM ghcr.io/sparfenyuk/mcp-proxy:latest
 
 # Install the 'uv' package
 RUN python3 -m ensurepip && pip install --no-cache-dir uv
