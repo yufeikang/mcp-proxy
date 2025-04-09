@@ -18,7 +18,9 @@ from mcp.client.stdio import StdioServerParameters
 from .sse_client import run_sse_client
 from .sse_server import SseServerSettings, run_sse_server
 
-logging.basicConfig(level=logging.DEBUG)
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+logging.basicConfig(level=getattr(logging, log_level, logging.WARNING))
+
 SSE_URL: t.Final[str | None] = os.getenv(
     "SSE_URL",
     None,
